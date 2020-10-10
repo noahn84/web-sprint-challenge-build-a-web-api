@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/projects", (req, res) => {
-  projects.get(req.params.id)
+  projects.get()
     .then((projects) => {
       res.status(200).json(projects)
     })
