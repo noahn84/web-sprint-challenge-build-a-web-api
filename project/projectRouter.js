@@ -60,4 +60,38 @@ router.post("/projects/:id/actions", checkProjectID(), (res, req) => {
     })
 });
 
+router.delete("/projects/:id", checkProjectID(), (req, res) => {
+  projects.remove(req.params.id)
+    .then((count) => {
+      if (count > 0) {
+        res.status(200).json({
+          message: "Project has been deleted",
+        })
+      } else {
+        res.status(404).json({
+          message: "The project could not be found",
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
+router.put("/projects/:id", checkProjectData(), checkProjectID(), (req, res) => {
+  projects.update(req.params.id, req.body)
+    .then((project) => {
+      if (project) {
+        res.status(200).json(project)
+      } else {
+        res.status(404).json({
+          message: "The project could not be found",
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+})
+
 module.exports = router
